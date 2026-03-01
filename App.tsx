@@ -88,8 +88,8 @@ const App: React.FC = () => {
   const [fakeProgress, setFakeProgress] = useState(0);
   const [lastError, setLastError] = useState<string | null>(null);
   const [isAutoWriting, setIsAutoWriting] = useState(false);
-  const [isKeyModalOpen, setIsKeyModalOpen] = useState(false);
   const [hasApiKey, setHasApiKey] = useState(false);
+  const [isKeyModalOpen, setIsKeyModalOpen] = useState(false);
   const [writingContent, setWritingContent] = useState("");
   const [isCopied, setIsCopied] = useState(false);
   
@@ -162,7 +162,9 @@ const App: React.FC = () => {
     setTimeout(() => setFakeProgress(0), 600);
   };
 
-  const handleOpenKeySelector = async () => setIsKeyModalOpen(true);
+  const handleOpenKeySelector = async () => {
+     setIsKeyModalOpen(true);
+   };
 
   const handleSuggestTitles = async () => {
     if (!config.reader.trim()) {
@@ -1023,7 +1025,7 @@ ${PURPOSES.map(p => `- ${p}`).join('\n')}
             </div>
           </div>
         </div>
-      )}
+
 	  {isKeyModalOpen && (
 <div style={{position: 'fixed', inset: 0, zIndex: 9999, display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(0,0,0,0.8)'}}>
 <div style={{backgroundColor: 'white', padding: '40px', borderRadius: '30px', textAlign: 'center', color: 'black'}}>
@@ -1033,6 +1035,7 @@ ${PURPOSES.map(p => `- ${p}`).join('\n')}
 </div>
 </div>
 )}
+
     </div>
   );
 };
