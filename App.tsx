@@ -88,7 +88,9 @@ const App: React.FC = () => {
   const [fakeProgress, setFakeProgress] = useState(0);
   const [lastError, setLastError] = useState<string | null>(null);
   const [isAutoWriting, setIsAutoWriting] = useState(false);
+  const [isKeyModalOpen, setIsKeyModalOpen] = useState(false);
   const [hasApiKey, setHasApiKey] = useState(false);
+  const [isKeyModalOpen, setIsKeyModalOpen] = useState(false);
   const [writingContent, setWritingContent] = useState("");
   const [isCopied, setIsCopied] = useState(false);
   
@@ -161,14 +163,7 @@ const App: React.FC = () => {
     setTimeout(() => setFakeProgress(0), 600);
   };
 
-  const handleOpenKeySelector = async () => {
-    // @ts-ignore
-    if (window.aistudio) {
-      // @ts-ignore
-      await window.aistudio.openSelectKey();
-      setHasApiKey(true);
-    }
-  };
+  const handleOpenKeySelector = async () => setIsKeyModalOpen(true);
 
   const handleSuggestTitles = async () => {
     if (!config.reader.trim()) {
@@ -1030,6 +1025,15 @@ ${PURPOSES.map(p => `- ${p}`).join('\n')}
           </div>
         </div>
       )}
+	  {isKeyModalOpen && (
+<div style={{position: 'fixed', inset: 0, zIndex: 9999, display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(0,0,0,0.8)'}}>
+<div style={{backgroundColor: 'white', padding: '40px', borderRadius: '30px', textAlign: 'center', color: 'black'}}>
+<h3 style={{fontSize: '20px', fontWeight: 'bold', marginBottom: '20px'}}>Gemini API 키 입력</h3>
+<input type="password" placeholder="AIza... 입력" style={{border: '1px solid #ccc', padding: '10px', width: '100%', marginBottom: '20px', borderRadius: '10px'}} onChange={(e) => { if(e.target.value.startsWith('AIza')) { setHasApiKey(true); } }} />
+<button style={{backgroundColor: '#2563eb', color: 'white', padding: '10px 30px', borderRadius: '15px', border: 'none', fontWeight: 'bold'}} onClick={() => setIsKeyModalOpen(false)}>설정 완료</button>
+</div>
+</div>
+)}
     </div>
   );
 };
