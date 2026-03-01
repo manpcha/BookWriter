@@ -1088,3 +1088,8 @@ ${PURPOSES.map(p => `- ${p}`).join('\n')}
   </div>
 )}
 
+    </div>
+  );
+};
+
+export default App;
