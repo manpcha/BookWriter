@@ -90,7 +90,6 @@ const App: React.FC = () => {
   const [isAutoWriting, setIsAutoWriting] = useState(false);
   const [isKeyModalOpen, setIsKeyModalOpen] = useState(false);
   const [hasApiKey, setHasApiKey] = useState(false);
-  const [isKeyModalOpen, setIsKeyModalOpen] = useState(false);
   const [writingContent, setWritingContent] = useState("");
   const [isCopied, setIsCopied] = useState(false);
   
