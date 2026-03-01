@@ -2,7 +2,7 @@ name: Deploy Vite App to GitHub Pages
 
 on:
   push:
-    branches: ["main"] # 본인의 메인 브랜치 이름 확인 (main 또는 master)
+    branches: ["main"]
 
 permissions:
   contents: read
@@ -20,9 +20,11 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
+          # cache 설정을 아예 삭제했습니다.
 
       - name: Install dependencies
-        run: npm install
+        # lock 파일이 없어도 설치를 진행하도록 합니다.
+        run: npm install 
 
       - name: Build
         run: npm run build
@@ -30,7 +32,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./dist # Vite의 빌드 결과물 폴더
+          path: ./dist
 
       - name: Deploy to GitHub Pages
         id: deployment
