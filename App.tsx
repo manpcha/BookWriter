@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useRef } from 'react';
 import { 
   BookConfig, 
@@ -1026,26 +1025,66 @@ ${PURPOSES.map(p => `- ${p}`).join('\n')}
           </div>
         </div>
 
-	  {isKeyModalOpen && (
+	  
+      )}
 
-<div style={{position: 'fixed', inset: 0, zIndex: 9999, display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(0,0,0,0.8)'}}>
-<div style={{backgroundColor: 'white', padding: '40px', borderRadius: '30px', textAlign: 'center', color: 'black'}}>
-<h3 style={{fontSize: '20px', fontWeight: 'bold', marginBottom: '20px'}}>Gemini API 키 입력</h3>
-<input
-type="password"
-placeholder="AIza... 입력"
-style={{border: '1px solid #ccc', padding: '10px', width: '100%', marginBottom: '20px', borderRadius: '10px'}}
-onChange={(e) => {
-(window as any).geminiApiKey = e.target.value;
-setHasApiKey(!!e.target.value);
-}}
-/>
-<button
-style={{backgroundColor: '#2563eb', color: 'white', padding: '10px 30px', borderRadius: '15px', border: 'none', fontWeight: 'bold'}}
-onClick={() => setIsKeyModalOpen(false)}
->
-설정 완료
-</button>
-</div>
-</div>
+{isKeyModalOpen && (
+  <div
+    className="fixed inset-0 z-[300] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
+    onClick={() => setIsKeyModalOpen(false)}
+  >
+    <div
+      className="w-full max-w-md bg-white/95 backdrop-blur-xl rounded-[32px] shadow-[0_30px_100px_rgba(0,0,0,0.35)] border border-white/30 p-8 animate-in zoom-in-95 duration-200"
+      onClick={(e) => e.stopPropagation()}
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="gemini-key-title"
+    >
+      <div className="flex items-start justify-between gap-6 mb-6">
+        <div>
+          <h3 id="gemini-key-title" className="text-2xl font-black text-slate-900 tracking-tight">Gemini API 키 입력</h3>
+          <p className="text-sm font-bold text-slate-500 mt-1 leading-snug">API 키는 브라우저 메모리에만 저장됩니다. (새로고침 시 초기화될 수 있어요)</p>
+        </div>
+        <button
+          type="button"
+          onClick={() => setIsKeyModalOpen(false)}
+          className="w-10 h-10 rounded-2xl flex items-center justify-center text-slate-400 hover:text-slate-900 hover:bg-slate-100 transition-colors text-2xl leading-none"
+          aria-label="닫기"
+        >
+          ✕
+        </button>
+      </div>
+
+      <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest">API Key</label>
+      <input
+        type="password"
+        placeholder="AIza... 입력"
+        autoFocus
+        className="mt-2 w-full px-4 py-3 rounded-2xl bg-slate-50 border border-slate-200 font-bold text-slate-800 outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+        onChange={(e) => {
+          (window as any).geminiApiKey = e.target.value;
+          setHasApiKey(!!e.target.value);
+        }}
+      />
+      <p className="mt-2 text-xs font-bold text-slate-400">예: AIzaSy... 형태</p>
+
+      <div className="mt-8 flex gap-3">
+        <button
+          type="button"
+          onClick={() => setIsKeyModalOpen(false)}
+          className="flex-1 py-3.5 rounded-2xl border-2 border-slate-100 bg-white hover:bg-slate-50 text-slate-900 font-black shadow-sm transition-all active:scale-95"
+        >
+          취소
+        </button>
+        <button
+          type="button"
+          onClick={() => setIsKeyModalOpen(false)}
+          className="flex-1 py-3.5 rounded-2xl bg-blue-600 hover:bg-blue-700 text-white font-black shadow-xl transition-all active:scale-95"
+        >
+          설정 완료
+        </button>
+      </div>
+    </div>
+  </div>
 )}
+
