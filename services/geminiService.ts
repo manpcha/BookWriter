@@ -22,7 +22,7 @@ async function withRetry<T>(fn: () => Promise<T>, retries = 3, delay = 2500): Pr
 // Generate book titles and subtitles using gemini-3-flash-preview
 export const generateTitlesAndSubtitles = async (config: BookConfig): Promise<{titles: string[], subtitles: string[]}> => {
   return withRetry(async () => {
-    const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+    const ai = new GoogleGenAI({ apiKey: (window as any).geminiApiKey || "" });
     const prompt = `
       전자책 제목과 부제를 추천해줘.
       책 종류: ${config.bookType}, 독자: ${config.reader}, 저자: ${config.authorPosition}, 목적: ${config.purpose}
@@ -51,7 +51,7 @@ export const generateTitlesAndSubtitles = async (config: BookConfig): Promise<{t
 // Generate detailed ebook outline using gemini-3-flash-preview
 export const generateEBookOutline = async (config: BookConfig, title: string, subtitle: string): Promise<Chapter[]> => {
   return withRetry(async () => {
-    const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+    const ai = new GoogleGenAI({ apiKey: (window as any).geminiApiKey || "" });
     const prompt = `책 [${title}: ${subtitle}]의 상세 목차를 JSON으로 작성. 총 ${config.chapterCount}장, 장당 소주제 ${config.subTopicsPerChapter}개. 각 장과 소주제는 논리적이고 체계적이어야 함.`;
     const response = await ai.models.generateContent({
       model: 'gemini-3-flash-preview',
@@ -96,7 +96,7 @@ export const generateSubTopicContent = async (
   bookSubtitle: string
 ): Promise<string> => {
   return withRetry(async () => {
-    const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+    const ai = new GoogleGenAI({ apiKey: (window as any).geminiApiKey || "" });
     const prompt = `
       [전자책 본문 집필 지시서]
       책 제목: ${bookTitle} (${bookSubtitle})
@@ -122,7 +122,7 @@ export const generateSubTopicContent = async (
 // Generate ebook cover image using gemini-3-pro-image-preview
 export const generateCoverImage = async (title: string, subtitle: string, extraItems?: string): Promise<string> => {
   return withRetry(async () => {
-    const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+    const ai = new GoogleGenAI({ apiKey: (window as any).geminiApiKey || "" });
     const prompt = `Premium minimalist ebook cover design. Title: "${title}". Subtitle: "${subtitle}". ${extraItems ? `Please MUST include visual elements related to: ${extraItems}.` : ''} 
     [Layout Rules]: Place the main title and subtitle in the upper-middle area (around the upper golden ratio point) typical of professional best-selling book covers. Ensure there is generous breathing room at the top and side margins. DO NOT place the text at the very top edge.
     Highly professional typography, abstract elegant background, professional business publishing style. Clear readability. Cinematic lighting. 3:4 aspect ratio.`;
