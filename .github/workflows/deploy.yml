@@ -10,7 +10,7 @@ permissions:
   id-token: write
 
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -20,11 +20,9 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          # cache 설정을 아예 삭제했습니다.
 
       - name: Install dependencies
-        # lock 파일이 없어도 설치를 진행하도록 합니다.
-        run: npm install 
+        run: npm install
 
       - name: Build
         run: npm run build
@@ -34,6 +32,15 @@ jobs:
         with:
           path: ./dist
 
+  deploy:
+    # 빌드가 성공해야 배포를 시작하도록 연결합니다.
+    needs: build
+    runs-on: ubuntu-latest
+    # 이 'environment' 설정이 빠져 있어서 아까 에러가 난 것입니다.
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
