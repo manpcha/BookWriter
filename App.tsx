@@ -1031,11 +1031,8 @@ ${PURPOSES.map(p => `- ${p}`).join('\n')}
 <div style={{backgroundColor: 'white', padding: '40px', borderRadius: '30px', textAlign: 'center', color: 'black'}}>
 <h3 style={{fontSize: '20px', fontWeight: 'bold', marginBottom: '20px'}}>Gemini API 키 입력</h3>
 <input type="password" placeholder="AIza... 입력" style={{border: '1px solid #ccc', padding: '10px', width: '100%', marginBottom: '20px', borderRadius: '10px'}} onChange={(e) => {
-const key = e.target.value;
-if(key.startsWith('AIza')) {
-(window as any).geminiApiKey = key;
-setHasApiKey(true);
-}
+(window as any).geminiApiKey = e.target.value;
+setHasApiKey(!!e.target.value);
 }} />
 <button style={{backgroundColor: '#2563eb', color: 'white', padding: '10px 30px', borderRadius: '15px', border: 'none', fontWeight: 'bold'}} onClick={() => setIsKeyModalOpen(false)}>설정 완료</button>
 </div>
