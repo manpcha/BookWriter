@@ -1,0 +1,5 @@
+{
+  "name": "JUNO's BOOK WRITER",
+  "description": "책의 구성과 분량을 입력 받아 독자의 목적을 달성하는 고품질 전자책을 단계별로 작성하는 인공지능 보조 도구입니다.",
+  "requestFramePermissions": []
+}
